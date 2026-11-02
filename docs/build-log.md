@@ -17,3 +17,7 @@ This repo was built with Claude Code from a written plan. Each entry is the inst
 ## Task 4 — Add the phase 4 exercises
 
 > Write three exercises in French under `exercices/`. 01: investigate from the logs and the code only, in five steps (reproduce, hypothesis, verify, fix, validate); Claude runs no command on the database; the fix comes with a test that failed before; the diagnostic goes in `docs/incidents/`. 02: a conversion script for `data/legacy.json` in `scripts/migrations/legacy/`, a dry run first, a test on a copy of the database, idempotent, the participant runs `--apply`. 03: turn the steps of exercise 01 into a skill that runs only when you call it. Each exercise ends with clear success criteria.
+
+## Task 5 — Add the phase 4 slides
+
+> Write `slides.md` for Marp, in French, about 22 slides in the order of the phase 4 outline: the five-step loop, read only, no database command by the agent, the smallest SQL, the diagnostic, throwaway scripts, dry run, copy and idempotence, the person runs `--apply`, skills, the demo, the practice and the exercises. At most 5 bullets per slide, speaker notes on the theory slides. Render to PNG and check that no text overflows.
