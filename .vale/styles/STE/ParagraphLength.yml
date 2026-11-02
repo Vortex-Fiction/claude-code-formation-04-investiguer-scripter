@@ -1,0 +1,6 @@
+extends: occurrence
+message: 'Keep a paragraph at 6 sentences or fewer (STE).'
+level: error
+scope: paragraph
+max: 6
+token: '[^.!?]+[.!?]'

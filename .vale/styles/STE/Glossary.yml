@@ -1,0 +1,17 @@
+extends: substitution
+message: "Use '%s', not '%s' (glossary)."
+level: error
+ignorecase: true
+swap:
+  rental: loan
+  lending: loan
+  checkout: loan
+  lend: borrow
+  check out: borrow
+  give back: return
+  bring back: return
+  customer: borrower
+  member: borrower
+  writer: author
+  novel: book
+  volume: book

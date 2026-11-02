@@ -1,0 +1,6 @@
+extends: existence
+message: "Do not use 'etc.' (STE)."
+level: error
+nonword: true
+tokens:
+  - '\betc\.'

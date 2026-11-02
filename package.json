@@ -1,0 +1,36 @@
+{
+  "name": "claude-code-formation-04-investiguer-scripter",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "backend",
+    "frontend",
+    "libs/shared"
+  ],
+  "scripts": {
+    "back": "npm run start --workspace backend",
+    "front": "npm run dev --workspace frontend",
+    "test": "npm run test --workspaces --if-present",
+    "test:coverage": "npm run test:coverage --workspace backend",
+    "lint": "eslint . && prettier --check . && npm run typecheck --workspace backend",
+    "lint:doc": "vale --glob=\"{**/{README,CLAUDE,SKILL}.md,docs/incidents/*.md}\" .",
+    "format": "prettier --write ."
+  },
+  "engines": {
+    "node": ">=20.19"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.0",
+    "eslint": "^10.0.0",
+    "eslint-plugin-vue": "^10.0.0",
+    "prettier": "~3.6.2",
+    "typescript-eslint": "^8.72.1",
+    "vue-eslint-parser": "^10.4.1"
+  },
+  "optionalDependencies": {
+    "@vvago/vale": "3.25.1"
+  },
+  "allowScripts": {
+    "@vvago/vale@3.25.1": true
+  }
+}

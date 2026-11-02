@@ -1,0 +1,6 @@
+extends: existence
+message: "Do not use 'should'. Use 'must', 'do not' or the imperative (STE)."
+level: error
+ignorecase: true
+tokens:
+  - should
