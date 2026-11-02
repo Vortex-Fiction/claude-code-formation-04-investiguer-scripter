@@ -12,7 +12,7 @@ A small library app (books, authors, loans) used for the phase 4 exercises. The 
 
 Install these tools before the session. You need Node.js 22.13 or later. On Windows, use an x64 computer: the SQLite driver has no Windows ARM build.
 
-On Windows, first allow PowerShell to run the npm and Claude Code launchers (once per user):
+On Windows, first allow PowerShell to run the npm launcher (once per user):
 
 ```powershell
 Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
@@ -25,6 +25,8 @@ Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 | GitHub CLI  | `brew install gh`                 | `winget install GitHub.cli`           |
 | Claude Code | `brew install --cask claude-code` | `winget install Anthropic.ClaudeCode` |
 
+Close and open your terminal again after the installation, so that it finds the new commands.
+
 Then, on both systems:
 
 ```bash
@@ -34,8 +36,6 @@ claude
 
 `claude` asks you to sign in the first time.
 
-Close and open your terminal again after the installation, so that it finds the new commands.
-
 ## Run
 
 ```bash
@@ -44,6 +44,11 @@ cd claude-code-formation-04-investiguer-scripter
 npm install
 npm run back
 ```
+
+`npm install` shows two messages that need no action:
+
+- "13 moderate severity vulnerabilities": these advisories are in the ESLint tools that you use only to develop. Do not run `npm audit fix --force`. It installs old versions that break `npm run lint`.
+- "install scripts blocked" for `esbuild` and `fsevents`: the tests, the lint and the app run without these scripts.
 
 In a second terminal:
 
@@ -65,6 +70,6 @@ npm run lint
 npm run lint:doc
 ```
 
-`npm run test:coverage` runs the backend tests, and the tests of each migration in `scripts/migrations/`, with coverage. It fails when lines, branches, functions or statements go below 100 %. In the backend, it does not count `main.ts`, `db/database.module.ts` and `db/seed.ts`: `npm run back` runs them.
+`npm run test:coverage` runs the backend tests with coverage. When a migration folder exists in `scripts/migrations/`, it also runs the tests of that migration. It fails when lines, branches, functions or statements go below 100 %. In the backend, it does not count `main.ts`, `db/database.module.ts` and `db/seed.ts`: `npm run back` runs them.
 
 `npm run lint:doc` checks each `README.md`, `CLAUDE.md` and `SKILL.md`, and the incident reports in `docs/incidents/`, with Vale and the Simplified Technical English rules in `.vale/`. `npm install` downloads Vale. If `npm run lint:doc` tells you that Vale is missing, run `npm rebuild @vvago/vale`.
