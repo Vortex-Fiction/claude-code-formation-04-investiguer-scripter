@@ -8,7 +8,7 @@ export function requireObject(body: unknown): Record<string, unknown> {
 }
 
 export function requireText(value: unknown, field: string): string {
-  if (typeof value !== 'string' || value.length === 0) {
+  if (typeof value !== 'string' || value.trim().length === 0) {
     throw new BadRequestException(`${field} should not be empty`);
   }
   return value;
