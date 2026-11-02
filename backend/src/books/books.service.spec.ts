@@ -36,6 +36,12 @@ describe('BooksService', () => {
     );
   });
 
+  it('rejects an isbn that has only hyphens', async () => {
+    await expect(service.create({ title: 'X', isbn: '---', authorId: 1 })).rejects.toThrow(
+      BadRequestException,
+    );
+  });
+
   it('rejects an author id that is not an integer', async () => {
     await expect(service.create({ title: 'X', isbn: '1', authorId: '1' })).rejects.toThrow(
       BadRequestException,

@@ -12,11 +12,16 @@ function normalizeIsbn(isbn: string): string {
   return isbn.replace(ISBN_SEPARATORS, '');
 }
 
+function requireIsbn(value: unknown): string {
+  const isbn = normalizeIsbn(requireText(value, 'isbn'));
+  return requireText(isbn, 'isbn');
+}
+
 export function parseCreateBookInput(body: unknown): CreateBookInput {
   const fields = requireObject(body);
   return {
     title: requireText(fields.title, 'title'),
-    isbn: normalizeIsbn(requireText(fields.isbn, 'isbn')),
+    isbn: requireIsbn(fields.isbn),
     authorId: requireInteger(fields.authorId, 'authorId'),
   };
 }
