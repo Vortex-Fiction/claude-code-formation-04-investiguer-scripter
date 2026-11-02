@@ -12,7 +12,7 @@
 3. `npm run lint:doc` doit être vert : il vérifie aussi les `SKILL.md`.
 4. Ouvrez une nouvelle session. Décrivez un problème sans appeler le skill : il ne doit pas se lancer.
 5. Appelez-le : `/investigate les emprunts renvoient parfois une 409 inattendue`. Il doit vous guider étape par étape et s'arrêter pour la preuve.
-6. Décidez où il vit : dans `~/.claude/skills/` s'il est personnel, dans `.claude/skills/` du repo s'il sert à l'équipe. Ce que plusieurs skills partagent (un modèle de rapport, un glossaire) va dans un dossier `_shared/`, et chaque skill donne son chemin.
+6. Décidez où il vit : dans `~/.claude/skills/` s'il est personnel, dans `.claude/skills/` du repo s'il sert à l'équipe. Ce que plusieurs skills partagent (un modèle de rapport, un glossaire) peut aller dans un dossier commun, par exemple `_shared/`, et chaque skill donne son chemin. C'est une convention d'équipe, pas une fonction de Claude Code : Claude Code ne lit ce dossier que si un skill donne le chemin.
 7. Commitez : `feat(skills): Add the investigate skill`.
 
 ## Réussi si

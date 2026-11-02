@@ -4,7 +4,7 @@ This repo was built with Claude Code from a written plan. Each entry is the inst
 
 ## Task 1 — Start phase 4 from the phase 3 app
 
-> Copy the tree of the phase 3 `main` branch without its history, with `git archive`. It already has the three `CLAUDE.md` files, `.claude/settings.json`, the format hook and the 100 % coverage gate. Remove the phase 3 ticket, exercises, slides, build log and `docs/superpowers/`. Remove each line that points to them. The README tells the `solution` branch and the `logs/`, `data/` and `scripts/migrations/` folders.
+> Start from the phase 3 app, without its history. It already has the three `CLAUDE.md` files, `.claude/settings.json`, the format hook and the 100 % coverage gate. Remove the phase 3 ticket, exercises, slides, build log and `docs/superpowers/`. Remove each line that points to them. The README tells the `solution` branch and the `logs/`, `data/` and `scripts/migrations/` folders.
 
 ## Task 2 — Add the production logs
 

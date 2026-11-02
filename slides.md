@@ -40,7 +40,7 @@ Repo : `claude-code-formation-04-investiguer-scripter`
 4. **Corriger** — le test rouge d'abord, puis le correctif
 5. **Valider** — l'erreur d'origine ne se reproduit plus
 
-<!-- Sans la boucle, l'agent saute de l'erreur au correctif. Il corrige ce qu'il croit être la cause, les tests passent, et le bug revient. Chaque étape a sa preuve : on ne passe pas à la suivante sans elle. -->
+<!-- Sans la boucle, l'agent saute de l'erreur au correctif. Il corrige ce qu'il croit être la cause, les tests passent, et le bug revient. Chaque étape a sa preuve : on ne passe pas à la suivante sans elle. Pour l'animateur : certaines 500 des logs ne se reproduisent pas sur la base neuve, car la prod a des données que la base locale n'a pas (par exemple « North of the Quiet River », authorId 8 → 404 en local). C'est un écart prod/local, pas une fausse piste du bug. Faites rejouer la requête « Pride and Prejudice » : elle donne la 500 sur la base neuve. -->
 
 ---
 
@@ -76,7 +76,7 @@ Repo : `claude-code-formation-04-investiguer-scripter`
 - En prod, un agent qui « répare vite » aggrave l'incident
 - `settings.json` : `deny` sur ce qui mute
 
-<!-- Exemple de Vortex : les commandes gcloud en lecture sont autorisées, celles qui modifient vont à l'humain. Même chose pour pulumi : l'agent écrit le code, l'humain lance. -->
+<!-- Exemple : les commandes cloud en lecture (lister, décrire, lire les logs) sont autorisées, celles qui modifient vont à l'humain. Même chose pour l'infrastructure en code : l'agent écrit le code, l'humain lance le déploiement. -->
 
 ---
 
@@ -86,13 +86,13 @@ Repo : `claude-code-formation-04-investiguer-scripter`
 - Pas même en lecture : une requête lourde ralentit la prod
 - Pas d'accès direct aux fichiers de la base
 - L'agent écrit la requête, vous la lancez
-- Le `settings.json` du repo le fait respecter
+- Le `settings.json` du repo ajoute un filet de sécurité
 
 ```json
-"deny": ["Bash(sqlite3*)", "Read(./backend/data/**)", "Edit(./backend/data/**)"]
+"deny": ["Bash(sqlite3*)", "Read(/backend/data/**)", "Edit(/backend/data/**)"]
 ```
 
-<!-- Une règle dans le CLAUDE.md, l'agent peut l'oublier au fil de la session. Une règle deny, il ne peut pas la contourner par erreur. -->
+<!-- Une règle dans le CLAUDE.md, l'agent peut l'oublier au fil de la session. Une règle deny bloque la forme habituelle de la commande, mais ce n'est pas une garantie : elle compare le texte de la commande. `/usr/bin/sqlite3` ou `sh -c 'sqlite3 …'` passent. Les deny Read et Edit visent les outils de Claude et les commandes de fichiers connues (`cat`, `>`), pas un script Node qui ouvre le fichier lui-même. Pour une vraie barrière : le sandbox de Claude Code. Sous Windows, Claude Code peut utiliser un outil PowerShell : les règles `Bash(...)` ne s'y appliquent pas, d'où les règles `PowerShell(...)` jumelles. -->
 
 ---
 
@@ -150,13 +150,13 @@ UPDATE loans SET returned_at = '2026-10-28T10:00:00.000Z' WHERE id = 42 AND retu
 
 # Copie et idempotence
 
-- Essai sur une copie de la base, ou une branche de base (Neon)
+- Essai sur une copie de la base, ou une branche de base
 - Jamais d'essai sur la vraie base
 - Idempotent : deux `--apply` de suite → le deuxième n'écrit rien
 - On peut relancer après une panne sans doublons
 - Les tests le prouvent : deux exécutions, une seule écriture
 
-<!-- Sur Vortex, la base Neon se branche en quelques secondes : on essaie le script sur une branche, puis on la jette. Ici, une copie du fichier SQLite fait la même chose. -->
+<!-- Certaines bases PostgreSQL hébergées se branchent en quelques secondes : on essaie le script sur une branche, puis on la jette. Ici, une copie du fichier SQLite fait la même chose. -->
 
 ---
 
@@ -164,14 +164,14 @@ UPDATE loans SET returned_at = '2026-10-28T10:00:00.000Z' WHERE id = 42 AND retu
 
 - L'agent écrit le script, les tests, le dry-run
 - Vous lancez `--apply`, d'abord sur la copie, puis sur la vraie base
-- Le `settings.json` refuse `--apply` à l'agent
+- Le `settings.json` bloque la forme habituelle de `--apply` : un filet, pas une garantie
 - Avant `--apply` : le rapport relu, la sauvegarde faite
 
 ```json
 "deny": ["Bash(node scripts/migrations/* --apply*)", "Bash(npm run migrate:* --apply*)"]
 ```
 
-<!-- L'agent n'est pas malveillant, il est pressé : après un dry-run propre, il enchaîne avec --apply « pour gagner du temps ». La règle deny rend ce geste impossible, et vous garde la décision. -->
+<!-- L'agent n'est pas malveillant, il est pressé : après un dry-run propre, il enchaîne avec --apply « pour gagner du temps ». La règle deny bloque ce geste sous sa forme habituelle. Elle compare seulement le texte de la commande : `cd scripts/migrations/legacy && node main.mjs --apply`, un chemin absolu ou un chemin avec des barres obliques inverses passent. La garantie, c'est vous : c'est vous qui lancez --apply. Pour une barrière dure : le sandbox. Sous Windows, Claude Code peut utiliser un outil PowerShell, d'où les règles `PowerShell(...)` jumelles. -->
 
 ---
 
@@ -191,17 +191,17 @@ UPDATE loans SET returned_at = '2026-10-28T10:00:00.000Z' WHERE id = 42 AND retu
 
 - Personnel d'abord : `~/.claude/skills/<nom>/SKILL.md`
 - Il a fait ses preuves → dans le repo : `.claude/skills/<nom>/`
-- Ce que plusieurs skills partagent → `.claude/skills/_shared/`
+- Ce que plusieurs skills partagent → un dossier commun, par exemple `_shared/`
 - Modèles, glossaire, conventions : un seul fichier, les skills donnent son chemin
 - Un skill d'équipe se relit en PR, comme du code
 
-<!-- Sur Vortex, _shared/ contient les modèles de README et de CLAUDE.md, le glossaire STE et les conventions git. Chaque skill y renvoie au lieu de les recopier. -->
+<!-- `_shared/` est une convention d'équipe, pas une fonction de Claude Code : Claude Code ne le charge pas seul, chaque skill donne le chemin du fichier à lire. Un tel dossier contient par exemple les modèles de README et de CLAUDE.md, un glossaire et les conventions git. -->
 
 ---
 
 # Invocation explicite seulement
 
-Le front matter de `.claude/skills/investigate/SKILL.md` :
+Le front matter de `.claude/skills/investigate/SKILL.md`, en tête du fichier entre deux lignes `---` :
 
 ```yaml
 name: investigate
