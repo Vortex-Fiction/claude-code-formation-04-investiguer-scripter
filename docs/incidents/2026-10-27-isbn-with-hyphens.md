@@ -16,12 +16,12 @@ When the client sends an ISBN that is already in the catalog, with hyphens or sp
 - In the same entry, the failed query has the ISBN without hyphens, `9780141439518`. The cause is `SQLITE_CONSTRAINT: UNIQUE constraint failed: books.isbn`.
 - `GET /api/books` on the local app shows `9780141439518` for "Pride and Prejudice". The ISBN is already in the catalog.
 - On the local app, the request body of the logs gives a 500. The same body with `9780141439518` gives a 409 with "A book with ISBN 9780141439518 already exists".
-- The logs have the same difference: a 409 for a known ISBN without hyphens, and a 201 for a new ISBN with hyphens.
+- The logs have a 409 for a known ISBN without hyphens: request `2b4bf1ff9f54cfbe`, ISBN `9780199539277`, on 2026-10-27.
 - The first 500 is after the deploy of `library-api-00042-kex` on 2026-10-27 at 07:58.
 
 ## Leads that we did not keep
 
-- Disk latency and API latency alerts. The nightly snapshot of `/data/library.db` causes them. Four failing requests are in an alert window, but the other four are not. Each 500 took 9 ms to 15 ms. The slow requests in the alert windows all return 200 or 201.
+- Disk latency and API latency alerts. The nightly snapshot of `/data/library.db` causes the alerts that start after 02:00. The disk alert of 2026-10-27 at 15:33 has no snapshot, but the same proof rejects it. Four failing requests are in an alert window, but the other four are not. Each 500 took 9 ms to 15 ms. The slow requests in the alert windows all return 200 or 201.
 - A lock on the database. No entry has `SQLITE_BUSY`. Each failing request has the same cause, a `UNIQUE` constraint, at all times of the day.
 
 ## Fix
