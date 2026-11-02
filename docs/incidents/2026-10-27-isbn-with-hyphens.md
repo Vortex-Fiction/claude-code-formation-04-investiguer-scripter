@@ -21,7 +21,7 @@ When the client sends an ISBN that is already in the catalog, with hyphens or sp
 
 ## Leads that we did not keep
 
-- Disk latency and API latency alerts. The nightly snapshot of `/data/library.db` causes them. Four failing requests are in an alert window, but the other four are not. Each 500 took 9 ms to 17 ms. The slow requests in the alert windows all return 200 or 201.
+- Disk latency and API latency alerts. The nightly snapshot of `/data/library.db` causes them. Four failing requests are in an alert window, but the other four are not. Each 500 took 9 ms to 15 ms. The slow requests in the alert windows all return 200 or 201.
 - A lock on the database. No entry has `SQLITE_BUSY`. Each failing request has the same cause, a `UNIQUE` constraint, at all times of the day.
 
 ## Fix

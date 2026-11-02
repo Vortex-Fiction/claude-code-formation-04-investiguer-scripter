@@ -20,7 +20,7 @@ The person gives a symptom, for example "the API sometimes returns a 500". You f
 
 1. **Reproduce.** Find a failed request in the logs. Use its request ID to get all its log entries. Send the same request to the local API and show the error.
 2. **Hypothesis.** Write one cause and the proof that confirms it or rejects it. List the other leads in the logs, for example alerts or slow requests at the same time. For each lead, give the proof that rejects it or keeps it.
-3. **Verify.** Send two requests that are almost the same: one that fails and one that passes. The hypothesis must explain the difference.
+3. **Verify.** Send two requests that are almost the same: one that fails and one that passes. The hypothesis must explain the difference. The request that passes must not write data: an expected error, for example a 409, is sufficient. The local API writes only to the local database, never to production.
 4. **Fix.** Write the test that reproduces the error and show that it fails. Then write the fix and show that the test passes.
 5. **Validate.** Send the request of the logs again: the error must not occur. Run `npm test`, `npm run test:coverage` and `npm run lint`.
 
