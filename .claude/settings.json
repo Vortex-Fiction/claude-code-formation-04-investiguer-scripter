@@ -17,8 +17,13 @@
       "Bash(node ./scripts/migrations/* --apply*)",
       "Bash(npm run migrate:* --apply*)",
       "Bash(sqlite3*)",
-      "Read(./backend/data/**)",
-      "Edit(./backend/data/**)"
+      "PowerShell(node scripts/migrations/* --apply*)",
+      "PowerShell(node ./scripts/migrations/* --apply*)",
+      "PowerShell(node .\\scripts\\migrations\\* --apply*)",
+      "PowerShell(npm run migrate:* --apply*)",
+      "PowerShell(sqlite3*)",
+      "Read(/backend/data/**)",
+      "Edit(/backend/data/**)"
     ]
   },
   "hooks": {

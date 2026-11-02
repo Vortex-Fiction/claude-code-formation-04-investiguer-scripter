@@ -15,7 +15,7 @@
    - macOS : `cp backend/data/library.db ../library-copy.db`
    - Windows (PowerShell) : `Copy-Item backend\data\library.db ..\library-copy.db`
 6. **Dry-run** sur la copie : Claude peut le lancer, il n'écrit rien. Lisez le rapport : ce qui sera créé, ce qui est déjà là, chaque ligne rejetée avec sa raison. Une raison vous surprend ? Retour à l'étape 3.
-7. **Vous** lancez `--apply` sur la copie, deux fois de suite. Le `settings.json` refuse cette commande à Claude.
+7. **Vous** lancez `--apply` sur la copie, deux fois de suite. Le `settings.json` bloque la forme habituelle de cette commande pour Claude. C'est un filet de sécurité, pas une garantie : la règle compare le texte de la commande, et `cd scripts/migrations/legacy && node main.mjs --apply` ou un chemin absolu passent. La garantie, c'est que vous seul lancez `--apply`. Sous Windows, Claude Code peut utiliser un outil PowerShell : le `settings.json` a des règles `PowerShell(...)` jumelles des règles `Bash(...)`.
 8. Quand la copie est bonne, vous lancez `--apply` sur `backend/data/library.db`, API arrêtée. Puis `npm run back` et `npm run front` : les livres importés sont là.
 9. Commitez le script et ses tests. Le jour où la migration est faite partout, le dossier est supprimé.
 
