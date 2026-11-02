@@ -10,7 +10,7 @@ A small library app (books, authors, loans) used for the phase 4 exercises. The 
 
 ## Prerequisites
 
-Install these tools before the session. You need Node.js 20.19 or later. On Windows, use an x64 computer: the SQLite driver has no Windows ARM build.
+Install these tools before the session. You need Node.js 22.13 or later. On Windows, use an x64 computer: the SQLite driver has no Windows ARM build.
 
 On Windows, first allow PowerShell to run the npm and Claude Code launchers (once per user):
 
@@ -18,12 +18,12 @@ On Windows, first allow PowerShell to run the npm and Claude Code launchers (onc
 Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 ```
 
-| Tool        | macOS (Homebrew)                           | Windows (winget, in PowerShell)            |
-| ----------- | ------------------------------------------ | ------------------------------------------ |
-| Node.js LTS | `brew install node`                        | `winget install OpenJS.NodeJS.LTS`         |
-| git         | `brew install git`                         | `winget install Git.Git`                   |
-| GitHub CLI  | `brew install gh`                          | `winget install GitHub.cli`                |
-| Claude Code | `npm install -g @anthropic-ai/claude-code` | `npm install -g @anthropic-ai/claude-code` |
+| Tool        | macOS (Homebrew)                  | Windows (winget, in PowerShell)       |
+| ----------- | --------------------------------- | ------------------------------------- |
+| Node.js LTS | `brew install node`               | `winget install OpenJS.NodeJS.LTS`    |
+| git         | `brew install git`                | `winget install Git.Git`              |
+| GitHub CLI  | `brew install gh`                 | `winget install GitHub.cli`           |
+| Claude Code | `brew install --cask claude-code` | `winget install Anthropic.ClaudeCode` |
 
 Then, on both systems:
 
