@@ -173,7 +173,7 @@ describe('convertLegacy', () => {
         loan('LN-0009', { out: '2025-09-01', back: null }),
       ],
     });
-    expect(converted.loans.map((item) => item.code)).toEqual(['LN-0001', 'LN-0008']);
+    expect(converted.loans.map((item) => item.code)).toEqual(['LN-0001']);
     expect(reasonsOf(converted)).toEqual([
       'book BK-0002: title is empty',
       'loan LN-0001: duplicate of an earlier LN-0001 row',
@@ -183,7 +183,8 @@ describe('convertLegacy', () => {
       'loan LN-0005: out "last week" is not a date',
       'loan LN-0006: back "31/02/2025" is not a date',
       'loan LN-0007: back "2025-08-02" is before out "2025-08-20"',
-      'loan LN-0009: book BK-0001 already has an open loan (LN-0008)',
+      'loan LN-0008: book BK-0001 has 2 open loans (LN-0008, LN-0009), a person must choose',
+      'loan LN-0009: book BK-0001 has 2 open loans (LN-0008, LN-0009), a person must choose',
     ]);
   });
 
@@ -242,7 +243,7 @@ describe('runMigration', () => {
 
   it('writes the rows with --apply, and a second --apply writes nothing', async () => {
     const firstLines = await migrate(true);
-    expect(firstLines).toContain('Written: 15 authors, 38 books, 56 loans.');
+    expect(firstLines).toContain('Written: 15 authors, 38 books, 55 loans.');
     const afterFirst = await readTables();
     expect(afterFirst.authors).toHaveLength(18);
     expect(afterFirst.books).toHaveLength(44);
@@ -256,7 +257,7 @@ describe('runMigration', () => {
   it('gives a reason for each rejected row of the legacy file', async () => {
     const lines = await migrate(false);
     const rejectedLines = lines.filter((line) => line.startsWith('  '));
-    expect(lines).toContain('Rejected: 16');
+    expect(lines).toContain('Rejected: 17');
     expect(rejectedLines).toEqual([
       '  book BK-0039: title is empty',
       '  book BK-0040: author "Rafael Quintero" is not "Last, First"',
@@ -264,7 +265,6 @@ describe('runMigration', () => {
       '  book BK-0042: isbn "N/A" is not an ISBN-13',
       '  book BK-0045: duplicate of BK-0020 (same ISBN)',
       '  book BK-0046: author is missing',
-      '  loan LN-0057: book BK-0033 already has an open loan (LN-0004)',
       '  loan LN-0058: back "2025-08-02" is before out "2025-08-20"',
       '  loan LN-0059: out "31/02/2025" is not a date',
       '  loan LN-0060: book BK-0099 is not in the file',
@@ -274,6 +274,8 @@ describe('runMigration', () => {
       '  loan LN-0063: out "last week" is not a date',
       '  loan LN-0064: member is empty',
       '  loan LN-0023: duplicate of an earlier LN-0023 row',
+      '  loan LN-0004: book BK-0033 has 2 open loans (LN-0004, LN-0057), a person must choose',
+      '  loan LN-0057: book BK-0033 has 2 open loans (LN-0004, LN-0057), a person must choose',
     ]);
   });
 
@@ -307,6 +309,49 @@ describe('runMigration', () => {
     const lines = await migrate(true, legacyFile);
     expect(lines).toContain('  loan LN-0001: book BK-0001 is already borrowed in the database');
     expect(lines).toContain('Written: 0 authors, 0 books, 0 loans.');
+  });
+
+  it('creates no author for a book that is already in the database', async () => {
+    const before = await readTables();
+    const legacyFile = writeLegacy({
+      books: [
+        book('BK-0001', {
+          title: 'Pride and Prejudice',
+          author: 'Doe, John',
+          isbn: '9780141439518',
+        }),
+      ],
+      loans: [],
+    });
+    const lines = await migrate(true, legacyFile);
+    expect(lines).toContain('Written: 0 authors, 0 books, 0 loans.');
+    expect(await readTables()).toEqual(before);
+  });
+
+  it('links a new book to the author that is already in the database', async () => {
+    const legacyFile = writeLegacy({
+      books: [
+        book('BK-0001', { title: 'Persuasion', author: 'Austen, Jane', isbn: '9780141439686' }),
+      ],
+      loans: [],
+    });
+    const lines = await migrate(true, legacyFile);
+    expect(lines).toContain('Written: 0 authors, 1 books, 0 loans.');
+    const tables = await readTables();
+    const austen = tables.authors.find((item) => item.name === 'Jane Austen');
+    const persuasion = tables.books.find((item) => item.title === 'Persuasion');
+    expect(persuasion.author_id).toBe(austen.id);
+  });
+
+  it('writes nothing when an insert fails during --apply', async () => {
+    const client = createClient({ url: pathToFileURL(databasePath).href });
+    await client.execute(
+      "CREATE TRIGGER fail_loan_insert BEFORE INSERT ON loans BEGIN SELECT RAISE(ABORT, 'loan insert failed'); END",
+    );
+    client.close();
+    const before = await readTables();
+    await expect(migrate(true)).rejects.toThrow('loan insert failed');
+    expect(await readTables()).toEqual(before);
   });
 
   it('stops when the database file does not exist', async () => {

@@ -150,7 +150,7 @@ function convertBooks(rows, rejected) {
   return { books, bookCodeByCode, rejectedCodes };
 }
 
-function convertLoan(row, converted, openLoanCodeByBookCode) {
+function convertLoan(row, converted) {
   const bookCode = converted.bookCodeByCode.get(row.book);
   if (bookCode === undefined) {
     if (converted.rejectedCodes.has(row.book)) {
@@ -167,11 +167,6 @@ function convertLoan(row, converted, openLoanCodeByBookCode) {
     return { reason: `out "${row.out}" is not a date` };
   }
   if (row.back === null) {
-    const openLoanCode = openLoanCodeByBookCode.get(bookCode);
-    if (openLoanCode !== undefined) {
-      return { reason: `book ${bookCode} already has an open loan (${openLoanCode})` };
-    }
-    openLoanCodeByBookCode.set(bookCode, row.code);
     return { loan: { code: row.code, bookCode, borrower, borrowedAt, returnedAt: null } };
   }
   const returnedAt = parseLegacyDate(row.back);
@@ -184,10 +179,38 @@ function convertLoan(row, converted, openLoanCodeByBookCode) {
   return { loan: { code: row.code, bookCode, borrower, borrowedAt, returnedAt } };
 }
 
+function findBooksWithManyOpenLoans(loans) {
+  const openLoanCodesByBookCode = new Map();
+  for (const loan of loans) {
+    if (loan.returnedAt === null) {
+      const codes = openLoanCodesByBookCode.get(loan.bookCode) ?? [];
+      openLoanCodesByBookCode.set(loan.bookCode, [...codes, loan.code]);
+    }
+  }
+  return new Map([...openLoanCodesByBookCode].filter(([, codes]) => codes.length > 1));
+}
+
+function rejectManyOpenLoans(loans, rejected) {
+  const openLoanCodesByBookCode = findBooksWithManyOpenLoans(loans);
+  const keptLoans = [];
+  for (const loan of loans) {
+    const codes = openLoanCodesByBookCode.get(loan.bookCode);
+    if (loan.returnedAt === null && codes !== undefined) {
+      rejected.push({
+        kind: 'loan',
+        code: loan.code,
+        reason: `book ${loan.bookCode} has ${codes.length} open loans (${codes.join(', ')}), a person must choose`,
+      });
+      continue;
+    }
+    keptLoans.push(loan);
+  }
+  return keptLoans;
+}
+
 function convertLoans(rows, converted, rejected) {
   const loans = [];
   const seenCodes = new Set();
-  const openLoanCodeByBookCode = new Map();
   for (const row of rows) {
     if (seenCodes.has(row.code)) {
       rejected.push({
@@ -198,14 +221,14 @@ function convertLoans(rows, converted, rejected) {
       continue;
     }
     seenCodes.add(row.code);
-    const result = convertLoan(row, converted, openLoanCodeByBookCode);
+    const result = convertLoan(row, converted);
     if (result.reason !== undefined) {
       rejected.push({ kind: 'loan', code: row.code, reason: result.reason });
       continue;
     }
     loans.push(result.loan);
   }
-  return loans;
+  return rejectManyOpenLoans(loans, rejected);
 }
 
 export function convertLegacy(legacy) {
@@ -222,11 +245,11 @@ function getLoanKey(bookId, borrower, borrowedAt) {
   return `${bookId}|${borrower}|${borrowedAt}`;
 }
 
-async function readDatabase(client) {
-  const authors = (await client.execute('SELECT id, name FROM authors')).rows;
-  const books = (await client.execute('SELECT id, isbn FROM books')).rows;
+async function readDatabase(executor) {
+  const authors = (await executor.execute('SELECT id, name FROM authors')).rows;
+  const books = (await executor.execute('SELECT id, isbn FROM books')).rows;
   const loans = (
-    await client.execute('SELECT book_id, borrower, borrowed_at, returned_at FROM loans')
+    await executor.execute('SELECT book_id, borrower, borrowed_at, returned_at FROM loans')
   ).rows;
   return {
     authorIdByKey: new Map(authors.map((row) => [getAuthorKey(String(row.name)), Number(row.id)])),
@@ -242,17 +265,19 @@ async function readDatabase(client) {
   };
 }
 
-function planAuthors(books, existing) {
+function planAuthors(allBooks, booksToCreate, existing) {
   const toCreate = new Map();
-  const alreadyThere = new Set();
-  for (const book of books) {
+  for (const book of booksToCreate) {
     const key = getAuthorKey(book.authorName);
-    if (existing.authorIdByKey.has(key)) {
-      alreadyThere.add(key);
-    } else {
+    if (!existing.authorIdByKey.has(key)) {
       toCreate.set(key, book.authorName);
     }
   }
+  const alreadyThere = new Set(
+    allBooks
+      .map((book) => getAuthorKey(book.authorName))
+      .filter((key) => existing.authorIdByKey.has(key)),
+  );
   return { toCreate: [...toCreate.values()], alreadyThere: alreadyThere.size };
 }
 
@@ -286,52 +311,58 @@ function planLoans(converted, existing) {
   return { toCreate, alreadyThere, rejected };
 }
 
-export async function planMigration(client, converted) {
-  const existing = await readDatabase(client);
+async function planMigration(executor, converted) {
+  const existing = await readDatabase(executor);
   const books = converted.books.filter((book) => !existing.bookIdByIsbn.has(book.isbn));
   const loans = planLoans(converted, existing);
   return {
     existing,
-    authors: planAuthors(converted.books, existing),
+    authors: planAuthors(converted.books, books, existing),
     books: { toCreate: books, alreadyThere: converted.books.length - books.length },
     loans: { toCreate: loans.toCreate, alreadyThere: loans.alreadyThere },
     rejected: [...converted.rejected, ...loans.rejected],
   };
 }
 
-async function applyPlan(client, plan) {
+async function applyPlan(transaction, plan) {
   const authorIdByKey = new Map(plan.existing.authorIdByKey);
   const bookIdByIsbn = new Map(plan.existing.bookIdByIsbn);
+  for (const name of plan.authors.toCreate) {
+    const result = await transaction.execute({
+      sql: 'INSERT INTO authors (name) VALUES (?) RETURNING id',
+      args: [name],
+    });
+    authorIdByKey.set(getAuthorKey(name), Number(result.rows[0].id));
+  }
+  for (const book of plan.books.toCreate) {
+    const result = await transaction.execute({
+      sql: 'INSERT INTO books (title, isbn, author_id) VALUES (?, ?, ?) RETURNING id',
+      args: [book.title, book.isbn, authorIdByKey.get(getAuthorKey(book.authorName))],
+    });
+    bookIdByIsbn.set(book.isbn, Number(result.rows[0].id));
+  }
+  for (const loan of plan.loans.toCreate) {
+    const bookId = bookIdByIsbn.get(loan.isbn);
+    await transaction.execute({
+      sql: 'INSERT INTO loans (book_id, borrower, borrowed_at, returned_at) VALUES (?, ?, ?, ?)',
+      args: [bookId, loan.borrower, loan.borrowedAt, loan.returnedAt],
+    });
+    if (loan.returnedAt === null) {
+      await transaction.execute({
+        sql: 'UPDATE books SET is_available = 0 WHERE id = ?',
+        args: [bookId],
+      });
+    }
+  }
+}
+
+async function planAndApply(client, converted) {
   const transaction = await client.transaction('write');
   try {
-    for (const name of plan.authors.toCreate) {
-      const result = await transaction.execute({
-        sql: 'INSERT INTO authors (name) VALUES (?) RETURNING id',
-        args: [name],
-      });
-      authorIdByKey.set(getAuthorKey(name), Number(result.rows[0].id));
-    }
-    for (const book of plan.books.toCreate) {
-      const result = await transaction.execute({
-        sql: 'INSERT INTO books (title, isbn, author_id) VALUES (?, ?, ?) RETURNING id',
-        args: [book.title, book.isbn, authorIdByKey.get(getAuthorKey(book.authorName))],
-      });
-      bookIdByIsbn.set(book.isbn, Number(result.rows[0].id));
-    }
-    for (const loan of plan.loans.toCreate) {
-      const bookId = bookIdByIsbn.get(loan.isbn);
-      await transaction.execute({
-        sql: 'INSERT INTO loans (book_id, borrower, borrowed_at, returned_at) VALUES (?, ?, ?, ?)',
-        args: [bookId, loan.borrower, loan.borrowedAt, loan.returnedAt],
-      });
-      if (loan.returnedAt === null) {
-        await transaction.execute({
-          sql: 'UPDATE books SET is_available = 0 WHERE id = ?',
-          args: [bookId],
-        });
-      }
-    }
+    const plan = await planMigration(transaction, converted);
+    await applyPlan(transaction, plan);
     await transaction.commit();
+    return plan;
   } finally {
     transaction.close();
   }
@@ -366,10 +397,9 @@ export async function runMigration({ databasePath, isApply, legacyFile }, print)
   const converted = convertLegacy(JSON.parse(readFileSync(legacyFile, 'utf8')));
   const client = createClient({ url: pathToFileURL(databasePath).href });
   try {
-    const plan = await planMigration(client, converted);
-    if (isApply) {
-      await applyPlan(client, plan);
-    }
+    const plan = isApply
+      ? await planAndApply(client, converted)
+      : await planMigration(client, converted);
     for (const line of formatReport(plan, isApply)) {
       print(line);
     }
