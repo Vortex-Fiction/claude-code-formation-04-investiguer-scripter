@@ -171,7 +171,7 @@ UPDATE loans SET returned_at = '2026-10-28T10:00:00.000Z' WHERE id = 42 AND retu
 "deny": ["Bash(node scripts/migrations/* --apply*)", "Bash(npm run migrate:* --apply*)"]
 ```
 
-<!-- L'agent n'est pas malveillant, il est pressé : après un dry-run propre, il enchaîne avec --apply « pour gagner du temps ». La règle deny bloque ce geste sous sa forme habituelle. Elle compare seulement le texte de la commande : `cd scripts/migrations/legacy && node main.mjs --apply`, un chemin absolu ou un chemin avec des barres obliques inverses passent. La garantie, c'est vous : c'est vous qui lancez --apply. Pour une barrière dure : le sandbox. Sous Windows, Claude Code peut utiliser un outil PowerShell, d'où les règles `PowerShell(...)` jumelles. -->
+<!-- L'agent n'est pas malveillant, il est pressé : après un dry-run propre, il enchaîne avec --apply « pour gagner du temps ». La règle deny bloque ce geste sous sa forme habituelle, même dans une commande composée : Claude Code vérifie chaque sous-commande. Elle compare seulement le texte de la commande : un chemin absolu vers le script ou `sh -c 'node scripts/migrations/legacy/main.mjs --apply'` passent. La garantie, c'est vous : c'est vous qui lancez --apply. Pour une barrière dure : le sandbox. Sous Windows, Claude Code peut utiliser un outil PowerShell, d'où les règles `PowerShell(...)` jumelles. -->
 
 ---
 
