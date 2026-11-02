@@ -27,4 +27,8 @@ describe('AuthorsService', () => {
   it('rejects an author with an empty name', async () => {
     await expect(service.create({ name: '' })).rejects.toThrow(BadRequestException);
   });
+
+  it('rejects a name made of spaces', async () => {
+    await expect(service.create({ name: '   ' })).rejects.toThrow(BadRequestException);
+  });
 });
