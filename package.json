@@ -13,12 +13,12 @@
     "front": "npm run dev --workspace frontend",
     "test": "npm run test --workspaces --if-present",
     "test:coverage": "npm run test:coverage --workspaces --if-present",
-    "lint": "eslint . && prettier --check . && npm run typecheck --workspace backend",
+    "lint": "eslint . && prettier --check . && npm run typecheck --workspaces --if-present",
     "lint:doc": "vale --glob=\"{**/{README,CLAUDE,SKILL}.md,docs/incidents/*.md}\" .",
     "format": "prettier --write ."
   },
   "engines": {
-    "node": ">=20.19"
+    "node": ">=22.13"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.0",

@@ -7,6 +7,7 @@ npm workspaces monorepo: `backend` (NestJS API), `frontend` (Vue 3 app), `libs/s
 - Write code, comments and documentation in English.
 - Do not add a comment that repeats the code. Add a comment only to tell why.
 - Do not use `any`. Do not use the `!` non-null assertion.
+- Do not use `as` to silence the compiler.
 - Write the failing test first, see it fail, then write the code.
 - Do not add a feature, an option or a file that the task does not ask for.
 - Run one simple command per Bash call. Do not chain commands with `&&`, `||` or `;`.
