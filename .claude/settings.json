@@ -12,7 +12,13 @@
       "Bash(git push --force*)",
       "Bash(git push -f*)",
       "Bash(git push * --force*)",
-      "Bash(git push * -f*)"
+      "Bash(git push * -f*)",
+      "Bash(node scripts/migrations/* --apply*)",
+      "Bash(node ./scripts/migrations/* --apply*)",
+      "Bash(npm run migrate:* --apply*)",
+      "Bash(sqlite3*)",
+      "Read(./backend/data/**)",
+      "Edit(./backend/data/**)"
     ]
   },
   "hooks": {

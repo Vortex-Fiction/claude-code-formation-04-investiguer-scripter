@@ -65,6 +65,6 @@ npm run lint
 npm run lint:doc
 ```
 
-`npm run test:coverage` runs the backend tests with coverage. It fails when lines, branches, functions or statements go below 100 %. It does not count `main.ts`, `db/database.module.ts` and `db/seed.ts`: `npm run back` runs them.
+`npm run test:coverage` runs the backend tests, and the tests of each migration in `scripts/migrations/`, with coverage. It fails when lines, branches, functions or statements go below 100 %. In the backend, it does not count `main.ts`, `db/database.module.ts` and `db/seed.ts`: `npm run back` runs them.
 
 `npm run lint:doc` checks each `README.md`, `CLAUDE.md` and `SKILL.md`, and the incident reports in `docs/incidents/`, with Vale and the Simplified Technical English rules in `.vale/`. `npm install` downloads Vale. If `npm run lint:doc` tells you that Vale is missing, run `npm rebuild @vvago/vale`.

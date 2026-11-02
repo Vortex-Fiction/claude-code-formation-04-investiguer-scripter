@@ -1,0 +1,792 @@
+{
+  "exportedFrom": "BiblioDesk 3.2",
+  "exportedAt": "2026-09-30 23:14",
+  "books": [
+    {
+      "code": "BK-0001",
+      "title": "The Salt Orchard",
+      "author": "Marchand, Hélène",
+      "isbn": "978-2-9104-0203-7",
+      "added": "2019-05-28"
+    },
+    {
+      "code": "BK-0002",
+      "title": "North of the Quiet River",
+      "author": "Lindqvist,  Tobias ",
+      "isbn": "9782914175784",
+      "added": "2023-04-18"
+    },
+    {
+      "code": "BK-0003",
+      "title": "A Ledger of Small Hours",
+      "author": "Okonjo, Amara",
+      "isbn": "9782917941492",
+      "added": "2017-03-10"
+    },
+    {
+      "code": "BK-0004",
+      "title": "The Glass Cartographer",
+      "author": "Quintero, Rafael",
+      "isbn": "978-2-9217-1708-3",
+      "added": "2020-08-03"
+    },
+    {
+      "code": "BK-0005",
+      "title": "Winter at Port Elise",
+      "author": "Kowalczyk, Ines",
+      "isbn": "9782925486169",
+      "added": "2021-03-19"
+    },
+    {
+      "code": "BK-0006",
+      "title": "The Lantern Keeper",
+      "author": "Achterberg, Dorian",
+      "isbn": "9782929257802",
+      "added": "2018-08-19"
+    },
+    {
+      "code": "BK-0007",
+      "title": "Seven Bridges to Varn",
+      "author": "Fortier, Mathilde",
+      "isbn": "978-2-9330-2223-6",
+      "added": "2019-12-05"
+    },
+    {
+      "code": "BK-0008",
+      "title": "Paper Moons",
+      "author": "Nakamura, Kenji",
+      "isbn": "9782936799777",
+      "added": "2022-06-17"
+    },
+    {
+      "code": "BK-0009",
+      "title": "The Last Ferry Home",
+      "author": "Bellerose, Antoine",
+      "isbn": "9782940568918",
+      "added": "2022-09-01"
+    },
+    {
+      "code": "BK-0010",
+      "title": "Copper and Ash",
+      "author": "Duval, Sophie-Anne",
+      "isbn": "978-2-9443-3388-8",
+      "added": "2021-01-22"
+    },
+    {
+      "code": "BK-0011",
+      "title": "The Weaver of Hollin",
+      "author": "Ferreira, Lucas",
+      "isbn": "9782948102527",
+      "added": "2017-05-16"
+    },
+    {
+      "code": "BK-0039",
+      "title": "",
+      "author": "Haddad, Nour",
+      "isbn": "9782901112341",
+      "added": "2017-06-17"
+    },
+    {
+      "code": "BK-0012",
+      "title": "Tidewater",
+      "author": "Ostrowski, Pavel",
+      "isbn": "9782951873117",
+      "added": "2023-07-18"
+    },
+    {
+      "code": "BK-0013",
+      "title": "Under a Borrowed Sky",
+      "author": "Thibodeau, Claire",
+      "isbn": "978-2-9556-4368-6",
+      "added": "2017-12-15"
+    },
+    {
+      "code": "BK-0014",
+      "title": "The Orchard Wall",
+      "author": "Haddad, Nour",
+      "isbn": "9782959419232",
+      "added": "2022-05-22"
+    },
+    {
+      "code": "BK-0015",
+      "title": "Signals from Marrow Bay",
+      "author": "Villeneuve, Olivier",
+      "isbn": "9782963187981",
+      "added": "2023-04-13"
+    },
+    {
+      "code": "BK-0016",
+      "title": "A Field Guide to Leaving",
+      "author": "Marchand, Hélène",
+      "isbn": "978-2-9669-5194-7",
+      "added": "2018-10-06"
+    },
+    {
+      "code": "BK-0040",
+      "title": "The Brass Orchestra",
+      "author": "Rafael Quintero",
+      "isbn": "9782902223459",
+      "added": "2019-12-17"
+    },
+    {
+      "code": "BK-0017",
+      "title": "The Clockmaker of Lys",
+      "author": "Lindqvist, Tobias",
+      "isbn": "9782970728139",
+      "added": "2017-01-14"
+    },
+    {
+      "code": "BK-0018",
+      "title": "Night Trains",
+      "author": "Okonjo, Amara",
+      "isbn": "9782974493194",
+      "added": "2019-09-16"
+    },
+    {
+      "code": "BK-0019",
+      "title": "The Fourth Lighthouse",
+      "author": "Quintero, Rafael",
+      "isbn": "978-2-9782-6981-8",
+      "added": "2018-09-14"
+    },
+    {
+      "code": "BK-0020",
+      "title": "Bread and Thunder",
+      "author": "Kowalczyk, Ines",
+      "isbn": "9782982037687",
+      "added": "2021-01-04"
+    },
+    {
+      "code": "BK-0021",
+      "title": "The Cedar Letters",
+      "author": "Achterberg, Dorian",
+      "isbn": "9782985804958",
+      "added": "2023-10-07"
+    },
+    {
+      "code": "BK-0022",
+      "title": "Small Gods of the Harbour",
+      "author": "Fortier, Mathilde",
+      "isbn": "978-2-9895-7736-0",
+      "added": "2020-06-21"
+    },
+    {
+      "code": "BK-0023",
+      "title": "The Long Thaw",
+      "author": "Nakamura, Kenji",
+      "isbn": "9782993347171",
+      "added": "2020-05-08"
+    },
+    {
+      "code": "BK-0024",
+      "title": "Rooms Without Doors",
+      "author": "Bellerose, Antoine",
+      "isbn": "9782997111488",
+      "added": "2022-07-13"
+    },
+    {
+      "code": "BK-0041",
+      "title": "Seven Bridges to Varn ",
+      "author": "Fortier, Mathilde",
+      "isbn": "9782933022236",
+      "added": "2021-04-08"
+    },
+    {
+      "code": "BK-0025",
+      "title": "The Map of Lost Rivers",
+      "author": "Duval, Sophie-Anne",
+      "isbn": "978-2-9008-8805-6",
+      "added": "2023-01-16"
+    },
+    {
+      "code": "BK-0042",
+      "title": "Letters to Nobody",
+      "author": "Fortier, Mathilde",
+      "isbn": "N/A",
+      "added": "2020-10-27"
+    },
+    {
+      "code": "BK-0026",
+      "title": "Ink and Iron",
+      "author": "Ferreira, Lucas",
+      "isbn": "9782904659065",
+      "added": "2020-07-20"
+    },
+    {
+      "code": "BK-0027",
+      "title": "A Season of Kites",
+      "author": "Ostrowski, Pavel",
+      "isbn": "9782908423099",
+      "added": "2023-04-09"
+    },
+    {
+      "code": "BK-0043",
+      "title": "Pride and Prejudice",
+      "author": "Austen, Jane",
+      "isbn": "978-0-14-143951-8",
+      "added": "2018-01-19"
+    },
+    {
+      "code": "BK-0028",
+      "title": "The Silent Quarry",
+      "author": "Thibodeau, Claire",
+      "isbn": "978-2-9121-9511-1",
+      "added": "2021-10-27"
+    },
+    {
+      "code": "BK-0044",
+      "title": "Frankenstein",
+      "author": "Shelley, Mary",
+      "isbn": "9780141439471",
+      "added": "2021-07-25"
+    },
+    {
+      "code": "BK-0029",
+      "title": "Ember Street",
+      "author": "Haddad, Nour",
+      "isbn": "9782915969375",
+      "added": "2020-01-23"
+    },
+    {
+      "code": "BK-0030",
+      "title": "The Ninth Garden",
+      "author": "Villeneuve, Olivier",
+      "isbn": "9782919735068",
+      "added": "2021-08-05"
+    },
+    {
+      "code": "BK-0045",
+      "title": "BREAD AND THUNDER",
+      "author": "KOWALCZYK, INES",
+      "isbn": "978-2-9820-3768-7",
+      "added": "2022-05-10"
+    },
+    {
+      "code": "BK-0031",
+      "title": "What the Fog Keeps",
+      "author": "Marchand, Hélène",
+      "isbn": "978-2-9235-0303-5",
+      "added": "2018-10-14"
+    },
+    {
+      "code": "BK-0046",
+      "title": "The Tin Compass",
+      "author": null,
+      "isbn": "9782903334567",
+      "added": ""
+    },
+    {
+      "code": "BK-0032",
+      "title": "The Apiary",
+      "author": "Lindqvist, Tobias",
+      "isbn": "9782927274320",
+      "added": "2022-08-17"
+    },
+    {
+      "code": "BK-0033",
+      "title": "Stone Songs",
+      "author": "Okonjo, Amara",
+      "isbn": "9782931046098",
+      "added": "2021-12-23"
+    },
+    {
+      "code": "BK-0034",
+      "title": "The Blue Hour Hotel",
+      "author": "Quintero, Rafael",
+      "isbn": "978-2-9348-1258-4",
+      "added": "2018-05-05"
+    },
+    {
+      "code": "BK-0035",
+      "title": "Harvest of Echoes",
+      "author": "Kowalczyk, Ines",
+      "isbn": "9782938589550",
+      "added": "2023-06-12"
+    },
+    {
+      "code": "BK-0036",
+      "title": "The Underground Library",
+      "author": "Achterberg, Dorian",
+      "isbn": "9782942354892",
+      "added": "2023-08-10"
+    },
+    {
+      "code": "BK-0037",
+      "title": "A Pocketful of Rain",
+      "author": "Fortier, Mathilde",
+      "isbn": "978-2-9461-2875-8",
+      "added": "2021-07-07"
+    },
+    {
+      "code": "BK-0038",
+      "title": "The Iron Meadow",
+      "author": "Nakamura, Kenji",
+      "isbn": "9782949894155",
+      "added": "2019-12-06"
+    }
+  ],
+  "loans": [
+    {
+      "code": "LN-0001",
+      "book": "BK-0023",
+      "member": "Jérémie Côté",
+      "out": "22/02/2025",
+      "back": "2025-02-28"
+    },
+    {
+      "code": "LN-0002",
+      "book": "BK-0016",
+      "member": "Maëlle Pelletier",
+      "out": "Feb 10, 2026",
+      "back": "02/03/2026"
+    },
+    {
+      "code": "LN-0003",
+      "book": "BK-0019",
+      "member": "Rosalie Boucher",
+      "out": "21/10/2024",
+      "back": "2024-11-10"
+    },
+    {
+      "code": "LN-0004",
+      "book": "BK-0033",
+      "member": "Laila Mansour",
+      "out": "Aug 31, 2026",
+      "back": null
+    },
+    {
+      "code": "LN-0005",
+      "book": "BK-0011",
+      "member": "Ingrid Halvorsen",
+      "out": "26/05/2024",
+      "back": "25/06/2024"
+    },
+    {
+      "code": "LN-0006",
+      "book": "BK-0008",
+      "member": "Jérémie Côté",
+      "out": "2025-07-04",
+      "back": "2025-07-09"
+    },
+    {
+      "code": "LN-0007",
+      "book": "BK-0023",
+      "member": "Maëlle Pelletier",
+      "out": "2025-08-11",
+      "back": "23/08/2025"
+    },
+    {
+      "code": "LN-0008",
+      "book": "BK-0013",
+      "member": "Samuel Okafor",
+      "out": "2024-01-07",
+      "back": "Jan 12, 2024"
+    },
+    {
+      "code": "LN-0009",
+      "book": "BK-0027",
+      "member": "Ingrid Halvorsen",
+      "out": "17/11/2025",
+      "back": "Nov 27, 2025"
+    },
+    {
+      "code": "LN-0010",
+      "book": "BK-0041",
+      "member": "Gabriel Roy",
+      "out": "2024-11-12",
+      "back": "2024-11-30"
+    },
+    {
+      "code": "LN-0011",
+      "book": "BK-0026",
+      "member": "Marc-André Gagnon",
+      "out": "24/09/2026",
+      "back": null
+    },
+    {
+      "code": "LN-0057",
+      "book": "BK-0033",
+      "member": "Daniel Weiss",
+      "out": "2026-09-02",
+      "back": null
+    },
+    {
+      "code": "LN-0012",
+      "book": "BK-0025",
+      "member": "Jérémie Côté",
+      "out": "09/11/2025",
+      "back": "2025-12-06T12:03:00Z"
+    },
+    {
+      "code": "LN-0058",
+      "book": "BK-0014",
+      "member": "Ana Sousa",
+      "out": "2025-08-20",
+      "back": "2025-08-02"
+    },
+    {
+      "code": "LN-0013",
+      "book": "BK-0026",
+      "member": "Priya Raman",
+      "out": "2025-10-31",
+      "back": "13/11/2025"
+    },
+    {
+      "code": "LN-0014",
+      "book": "BK-0018",
+      "member": "Yusuf Demir",
+      "out": "2026-06-04",
+      "back": "Jun 19, 2026"
+    },
+    {
+      "code": "LN-0015",
+      "book": "BK-0023",
+      "member": "Ingrid Halvorsen",
+      "out": "2024-12-15",
+      "back": "14/01/2025"
+    },
+    {
+      "code": "LN-0059",
+      "book": "BK-0026",
+      "member": "Thomas Girard",
+      "out": "31/02/2025",
+      "back": "2025-03-10"
+    },
+    {
+      "code": "LN-0060",
+      "book": "BK-0099",
+      "member": "Gabriel Roy",
+      "out": "2025-02-11",
+      "back": "2025-02-25"
+    },
+    {
+      "code": "LN-0061",
+      "book": "BK-0039",
+      "member": "Chloé Lavoie",
+      "out": "2024-06-02",
+      "back": "2024-06-19"
+    },
+    {
+      "code": "LN-0016",
+      "book": "BK-0043",
+      "member": "Ingrid Halvorsen",
+      "out": "Aug 4, 2024",
+      "back": "2024-08-25"
+    },
+    {
+      "code": "LN-0017",
+      "book": "BK-0038",
+      "member": "Lucie Fortin",
+      "out": "2025-02-24",
+      "back": "2025-03-19"
+    },
+    {
+      "code": "LN-0018",
+      "book": "BK-0012",
+      "member": "Jérémie Côté",
+      "out": "21/09/2026",
+      "back": null
+    },
+    {
+      "code": "LN-0019",
+      "book": "BK-0034",
+      "member": "Élodie Caron",
+      "out": "22/08/2025",
+      "back": "20/09/2025"
+    },
+    {
+      "code": "LN-0020",
+      "book": "BK-0034",
+      "member": "Noah Bergeron",
+      "out": "2024-02-13",
+      "back": "2024-03-08"
+    },
+    {
+      "code": "LN-0021",
+      "book": "BK-0012",
+      "member": "Daniel Weiss",
+      "out": "18/01/2025",
+      "back": "2025-02-04T13:47:00Z"
+    },
+    {
+      "code": "LN-0022",
+      "book": "BK-0033",
+      "member": "Maëlle Pelletier",
+      "out": "03/04/2024",
+      "back": "27/04/2024"
+    },
+    {
+      "code": "LN-0023",
+      "book": "BK-0031",
+      "member": "Jérémie Côté",
+      "out": "12/08/2024",
+      "back": "06/09/2024"
+    },
+    {
+      "code": "LN-0024",
+      "book": "BK-0032",
+      "member": "Félix Morin",
+      "out": "24/12/2025",
+      "back": "2026-01-23"
+    },
+    {
+      "code": "LN-0025",
+      "book": "BK-0006",
+      "member": "Rosalie Boucher",
+      "out": "27/09/2026",
+      "back": null
+    },
+    {
+      "code": "LN-0062",
+      "book": "BK-0120",
+      "member": "Priya Raman",
+      "out": "03/09/2025",
+      "back": null
+    },
+    {
+      "code": "LN-0026",
+      "book": "BK-0016",
+      "member": "Élodie Caron",
+      "out": "15/11/2025",
+      "back": "2025-12-02"
+    },
+    {
+      "code": "LN-0027",
+      "book": "BK-0034",
+      "member": "Gabriel Roy",
+      "out": "2024-04-30",
+      "back": "2024-05-26"
+    },
+    {
+      "code": "LN-0028",
+      "book": "BK-0015",
+      "member": "Maëlle Pelletier",
+      "out": "26/11/2025",
+      "back": "08/12/2025"
+    },
+    {
+      "code": "LN-0029",
+      "book": "BK-0010",
+      "member": "Laila Mansour",
+      "out": "2026-01-10",
+      "back": "2026-02-02"
+    },
+    {
+      "code": "LN-0030",
+      "book": "BK-0029",
+      "member": "Samuel Okafor",
+      "out": "2026-03-25",
+      "back": "Apr 6, 2026"
+    },
+    {
+      "code": "LN-0031",
+      "book": "BK-0045",
+      "member": "Rosalie Boucher",
+      "out": "02/06/2025",
+      "back": "2025-06-20"
+    },
+    {
+      "code": "LN-0032",
+      "book": "BK-0007",
+      "member": "Rosalie Boucher",
+      "out": "Aug 20, 2026",
+      "back": null
+    },
+    {
+      "code": "LN-0033",
+      "book": "BK-0031",
+      "member": "Noah Bergeron",
+      "out": "24/03/2025",
+      "back": "27/03/2025"
+    },
+    {
+      "code": "LN-0034",
+      "book": "BK-0007",
+      "member": "Thomas Girard",
+      "out": "2024-03-13",
+      "back": "2024-03-18"
+    },
+    {
+      "code": "LN-0012",
+      "book": "BK-0025",
+      "member": "Jérémie Côté",
+      "out": "09/11/2025",
+      "back": "2025-12-06T12:03:00Z"
+    },
+    {
+      "code": "LN-0035",
+      "book": "BK-0006",
+      "member": "Samuel Okafor",
+      "out": "2025-07-27T17:15:00Z",
+      "back": "2025-08-06T11:52:00Z"
+    },
+    {
+      "code": "LN-0036",
+      "book": "BK-0014",
+      "member": "Ingrid Halvorsen",
+      "out": "29/05/2025",
+      "back": "11/06/2025"
+    },
+    {
+      "code": "LN-0037",
+      "book": "BK-0037",
+      "member": "Priya Raman",
+      "out": "Dec 21, 2024",
+      "back": "2025-01-03T16:48:00Z"
+    },
+    {
+      "code": "LN-0038",
+      "book": "BK-0044",
+      "member": "Chloé Lavoie",
+      "out": "2026-03-10T09:58:00Z",
+      "back": "06/04/2026"
+    },
+    {
+      "code": "LN-0039",
+      "book": "BK-0016",
+      "member": "Ana Sousa",
+      "out": "2026-09-03",
+      "back": null
+    },
+    {
+      "code": "LN-0040",
+      "book": "BK-0005",
+      "member": "Marc-André Gagnon",
+      "out": "2024-03-07T09:02:00Z",
+      "back": "2024-03-10"
+    },
+    {
+      "code": "LN-0041",
+      "book": "BK-0031",
+      "member": "Rosalie Boucher",
+      "out": "2025-04-01",
+      "back": "12/04/2025"
+    },
+    {
+      "code": "LN-0063",
+      "book": "BK-0006",
+      "member": "Félix Morin",
+      "out": "last week",
+      "back": null
+    },
+    {
+      "code": "LN-0064",
+      "book": "BK-0009",
+      "member": "",
+      "out": "2025-04-04",
+      "back": "2025-04-12"
+    },
+    {
+      "code": "LN-0042",
+      "book": "BK-0006",
+      "member": "Laila Mansour",
+      "out": "2025-01-23",
+      "back": "2025-02-15"
+    },
+    {
+      "code": "LN-0023",
+      "book": "BK-0031",
+      "member": "Jérémie Côté",
+      "out": "12/08/2024",
+      "back": "06/09/2024"
+    },
+    {
+      "code": "LN-0043",
+      "book": "BK-0034",
+      "member": "Priya Raman",
+      "out": "02/04/2026",
+      "back": "2026-04-24"
+    },
+    {
+      "code": "LN-0044",
+      "book": "BK-0038",
+      "member": "Maëlle Pelletier",
+      "out": "03/03/2025",
+      "back": "2025-03-07"
+    },
+    {
+      "code": "LN-0045",
+      "book": "BK-0027",
+      "member": "Daniel Weiss",
+      "out": "22/02/2025",
+      "back": "22/03/2025"
+    },
+    {
+      "code": "LN-0046",
+      "book": "BK-0017",
+      "member": "Marc-André Gagnon",
+      "out": "2026-08-08",
+      "back": null
+    },
+    {
+      "code": "LN-0047",
+      "book": "BK-0041",
+      "member": "Chloé Lavoie",
+      "out": "20/08/2025",
+      "back": "2025-09-06"
+    },
+    {
+      "code": "LN-0048",
+      "book": "BK-0029",
+      "member": "Lucie Fortin",
+      "out": "2025-01-22",
+      "back": "Feb 3, 2025"
+    },
+    {
+      "code": "LN-0049",
+      "book": "BK-0013",
+      "member": "Gabriel Roy",
+      "out": "2025-08-26",
+      "back": "21/09/2025"
+    },
+    {
+      "code": "LN-0050",
+      "book": "BK-0021",
+      "member": "Ingrid Halvorsen",
+      "out": "2024-08-17",
+      "back": "2024-08-24"
+    },
+    {
+      "code": "LN-0051",
+      "book": "BK-0035",
+      "member": "Félix Morin",
+      "out": "10/01/2026",
+      "back": "08/02/2026"
+    },
+    {
+      "code": "LN-0052",
+      "book": "BK-0014",
+      "member": "Priya Raman",
+      "out": "2025-05-16T14:02:00Z",
+      "back": "2025-05-26"
+    },
+    {
+      "code": "LN-0053",
+      "book": "BK-0027",
+      "member": "Yusuf Demir",
+      "out": "2026-09-07",
+      "back": null
+    },
+    {
+      "code": "LN-0054",
+      "book": "BK-0001",
+      "member": "Lucie Fortin",
+      "out": "2024-02-11",
+      "back": "09/03/2024"
+    },
+    {
+      "code": "LN-0055",
+      "book": "BK-0019",
+      "member": "Thomas Girard",
+      "out": "2024-11-26T10:17:00Z",
+      "back": "2024-12-12"
+    },
+    {
+      "code": "LN-0056",
+      "book": "BK-0012",
+      "member": "Thomas Girard",
+      "out": "2024-02-12T16:56:00Z",
+      "back": "2024-03-11"
+    }
+  ]
+}

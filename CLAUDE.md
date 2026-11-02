@@ -32,3 +32,5 @@ npm workspaces monorepo: `backend` (NestJS API), `frontend` (Vue 3 app), `libs/s
 
 - `README.md` — prerequisites, run and check commands.
 - `libs/shared/README.md` — the shared types.
+- `data/README.md` — the schema of the old app export.
+- `scripts/migrations/CLAUDE.md` — the rules for a data migration script.

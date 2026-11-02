@@ -5,13 +5,14 @@
   "workspaces": [
     "backend",
     "frontend",
-    "libs/shared"
+    "libs/shared",
+    "scripts/migrations/*"
   ],
   "scripts": {
     "back": "npm run start --workspace backend",
     "front": "npm run dev --workspace frontend",
     "test": "npm run test --workspaces --if-present",
-    "test:coverage": "npm run test:coverage --workspace backend",
+    "test:coverage": "npm run test:coverage --workspaces --if-present",
     "lint": "eslint . && prettier --check . && npm run typecheck --workspace backend",
     "lint:doc": "vale --glob=\"{**/{README,CLAUDE,SKILL}.md,docs/incidents/*.md}\" .",
     "format": "prettier --write ."
