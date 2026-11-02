@@ -40,7 +40,7 @@ Repo : `claude-code-formation-04-investiguer-scripter`
 4. **Corriger** — le test rouge d'abord, puis le correctif
 5. **Valider** — l'erreur d'origine ne se reproduit plus
 
-<!-- Sans la boucle, l'agent saute de l'erreur au correctif. Il corrige ce qu'il croit être la cause, les tests passent, et le bug revient. Chaque étape a sa preuve : on ne passe pas à la suivante sans elle. Pour l'animateur : certaines 500 des logs ne se reproduisent pas sur la base neuve, car la prod a des données que la base locale n'a pas (par exemple « North of the Quiet River », authorId 8 → 404 en local). C'est un écart prod/local, pas une fausse piste du bug. Faites rejouer la requête « Pride and Prejudice » : elle donne la 500 sur la base neuve. -->
+<!-- Sans la boucle, l'agent saute de l'erreur au correctif. Il corrige ce qu'il croit être la cause, les tests passent, et le bug revient. Chaque étape a sa preuve : on ne passe pas à la suivante sans elle. Pour l'animateur : une requête des logs ne donne pas la 500 en local, car la prod a des données que la base locale n'a pas (par exemple « North of the Quiet River », authorId 8 → 404 en local). C'est un écart prod/local, pas une fausse piste du bug. Faites rejouer la requête « Pride and Prejudice » : elle donne la 500 sur la base neuve. -->
 
 ---
 
@@ -92,7 +92,7 @@ Repo : `claude-code-formation-04-investiguer-scripter`
 "deny": ["Bash(sqlite3*)", "Read(/backend/data/**)", "Edit(/backend/data/**)"]
 ```
 
-<!-- Une règle dans le CLAUDE.md, l'agent peut l'oublier au fil de la session. Une règle deny bloque la forme habituelle de la commande, mais ce n'est pas une garantie : elle compare le texte de la commande. `/usr/bin/sqlite3` ou `sh -c 'sqlite3 …'` passent. Les deny Read et Edit visent les outils de Claude et les commandes de fichiers connues (`cat`, `>`), pas un script Node qui ouvre le fichier lui-même. Pour une vraie barrière : le sandbox de Claude Code. Sous Windows, Claude Code peut utiliser un outil PowerShell : les règles `Bash(...)` ne s'y appliquent pas, d'où les règles `PowerShell(...)` jumelles. -->
+<!-- Une règle dans le CLAUDE.md, l'agent peut l'oublier au fil de la session. Une règle deny bloque la forme habituelle de la commande, mais ce n'est pas une garantie : elle compare le texte de la commande. `/usr/bin/sqlite3` ou `sh -c 'sqlite3 …'` passent. Les deny Read et Edit visent les outils de Claude et les commandes de fichiers connues (`cat`, `>`), pas un script Node qui ouvre le fichier lui-même. Pour une vraie barrière : le sandbox, activé et configuré avec `sandbox.filesystem.denyWrite` / `denyRead` sur `backend/data` (par défaut il laisse écrire dans le répertoire de travail ; pas de sandbox sous Windows natif, seulement WSL2). Sous Windows, Claude Code peut utiliser un outil PowerShell : les règles `Bash(...)` ne s'y appliquent pas, d'où les règles `PowerShell(...)` jumelles. -->
 
 ---
 
@@ -105,7 +105,7 @@ Repo : `claude-code-formation-04-investiguer-scripter`
 - Une transaction, et le résultat vérifié après
 
 ```sql
-UPDATE loans SET returned_at = '2026-10-28T10:00:00.000Z' WHERE id = 42 AND returned_at IS NULL;
+UPDATE loans SET borrower = 'Lucie Fortin' WHERE id = 42 AND borrower = 'Lucie Fortn';
 ```
 
 <!-- L'agent tend à écrire un script générique avec des options. Pour une correction ponctuelle, le plus petit SQL est le plus facile à relire, donc le plus sûr. -->
@@ -156,7 +156,7 @@ UPDATE loans SET returned_at = '2026-10-28T10:00:00.000Z' WHERE id = 42 AND retu
 - On peut relancer après une panne sans doublons
 - Les tests le prouvent : deux exécutions, une seule écriture
 
-<!-- Certaines bases PostgreSQL hébergées se branchent en quelques secondes : on essaie le script sur une branche, puis on la jette. Ici, une copie du fichier SQLite fait la même chose. -->
+<!-- Certaines bases PostgreSQL hébergées créent une branche en quelques secondes : on essaie le script sur une branche, puis on la jette. Ici, une copie du fichier SQLite fait la même chose. -->
 
 ---
 
@@ -171,7 +171,7 @@ UPDATE loans SET returned_at = '2026-10-28T10:00:00.000Z' WHERE id = 42 AND retu
 "deny": ["Bash(node scripts/migrations/* --apply*)", "Bash(npm run migrate:* --apply*)"]
 ```
 
-<!-- L'agent n'est pas malveillant, il est pressé : après un dry-run propre, il enchaîne avec --apply « pour gagner du temps ». La règle deny bloque ce geste sous sa forme habituelle, même dans une commande composée : Claude Code vérifie chaque sous-commande. Elle compare seulement le texte de la commande : un chemin absolu vers le script ou `sh -c 'node scripts/migrations/legacy/main.mjs --apply'` passent. La garantie, c'est vous : c'est vous qui lancez --apply. Pour une barrière dure : le sandbox. Sous Windows, Claude Code peut utiliser un outil PowerShell, d'où les règles `PowerShell(...)` jumelles. -->
+<!-- L'agent n'est pas malveillant, il est pressé : après un dry-run propre, il enchaîne avec --apply « pour gagner du temps ». La règle deny bloque ce geste sous sa forme habituelle, même dans une commande composée : Claude Code vérifie chaque sous-commande. Elle compare seulement le texte de la commande : un chemin absolu vers le script ou `sh -c 'node scripts/migrations/legacy/main.mjs --apply'` passent. La garantie, c'est vous : c'est vous qui lancez --apply. Pour une vraie barrière : le sandbox, activé et configuré avec `sandbox.filesystem.denyWrite` / `denyRead` sur `backend/data` (par défaut il laisse écrire dans le répertoire de travail ; pas de sandbox sous Windows natif, seulement WSL2). Sous Windows, Claude Code peut utiliser un outil PowerShell, d'où les règles `PowerShell(...)` jumelles. -->
 
 ---
 
