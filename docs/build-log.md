@@ -21,3 +21,9 @@ This repo was built with Claude Code from a written plan. Each entry is the inst
 ## Task 5 — Add the phase 4 slides
 
 > Write `slides.md` for Marp, in French, about 22 slides in the order of the phase 4 outline: the five-step loop, read only, no database command by the agent, the smallest SQL, the diagnostic, throwaway scripts, dry run, copy and idempotence, the person runs `--apply`, skills, the demo, the practice and the exercises. At most 5 bullets per slide, speaker notes on the theory slides. Render to PNG and check that no text overflows.
+
+## Task 6 — The `solution` branch
+
+> The planted bug: `BooksService.create` checks for a duplicate ISBN with the ISBN of the request, but inserts the ISBN without hyphens and spaces. A known ISBN with hyphens or spaces passes the check and breaks the `UNIQUE` constraint, so the API returns a 500. Only `POST /api/books` with such an ISBN fails. The `main` tests do not send one, so `main` keeps 100 % coverage. The logs show the `requestBody` with hyphens next to the failed query without hyphens. The false lead is the disk and API latency alerts of the nightly database snapshot.
+>
+> On `solution`: write the test that reproduces the bug and see it fail, fix it in `parseCreateBookInput`, and write the diagnostic in `docs/incidents/`. Write the conversion script of `data/legacy.json` in `scripts/migrations/legacy/`, with its tests: a dry run writes nothing, a second `--apply` writes nothing, and each type of rejected row has a test. Run it on a copy of the database, never on `backend/data/`. Add the `investigate` skill, which runs only when you call it.

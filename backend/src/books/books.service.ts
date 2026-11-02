@@ -6,12 +6,6 @@ import { DATABASE } from '../db/database.module';
 import { authors, books } from '../db/schema';
 import { parseCreateBookInput } from './books.input';
 
-const ISBN_SEPARATORS = /[\s-]/g;
-
-function normalizeIsbn(isbn: string): string {
-  return isbn.replace(ISBN_SEPARATORS, '');
-}
-
 @Injectable()
 export class BooksService {
   constructor(@Inject(DATABASE) private readonly database: Database) {}
@@ -56,7 +50,7 @@ export class BooksService {
     }
     const [book] = await this.database
       .insert(books)
-      .values({ title: input.title, isbn: normalizeIsbn(input.isbn), authorId: input.authorId })
+      .values({ title: input.title, isbn: input.isbn, authorId: input.authorId })
       .returning();
     return book;
   }

@@ -59,6 +59,29 @@ describe('BooksService', () => {
     ).rejects.toThrow(ConflictException);
   });
 
+  it('rejects a duplicated isbn written with hyphens or spaces', async () => {
+    const [firstBook] = await service.list();
+    const isbn = firstBook.isbn;
+    const hyphenatedIsbn = `${isbn.slice(0, 3)}-${isbn.slice(3, 4)}-${isbn.slice(4, 12)}-${isbn.slice(12)}`;
+    const spacedIsbn = `${isbn.slice(0, 3)} ${isbn.slice(3)}`;
+    await expect(
+      service.create({ title: 'Copy', isbn: hyphenatedIsbn, authorId: firstBook.authorId }),
+    ).rejects.toThrow(ConflictException);
+    await expect(
+      service.create({ title: 'Copy', isbn: spacedIsbn, authorId: firstBook.authorId }),
+    ).rejects.toThrow(ConflictException);
+  });
+
+  it('stores the isbn without hyphens or spaces', async () => {
+    const [firstBook] = await service.list();
+    const book = await service.create({
+      title: 'Persuasion',
+      isbn: '978-0-14-143968 6',
+      authorId: firstBook.authorId,
+    });
+    expect(book.isbn).toBe('9780141439686');
+  });
+
   it('gets a book by id', async () => {
     const [firstBook] = await service.list();
     expect((await service.getById(firstBook.id)).title).toBe(firstBook.title);

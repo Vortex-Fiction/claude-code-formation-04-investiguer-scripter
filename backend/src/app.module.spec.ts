@@ -67,6 +67,17 @@ describe('AppModule over HTTP', () => {
     expect(book.title).toBe('Persuasion');
   });
 
+  it('answers 409, not 500, for a known isbn written with hyphens', async () => {
+    const firstBook = await getFirstBook();
+    const isbn = firstBook.isbn;
+    const created = await post('/books', {
+      title: firstBook.title,
+      isbn: `${isbn.slice(0, 3)}-${isbn.slice(3, 4)}-${isbn.slice(4, 12)}-${isbn.slice(12)}`,
+      authorId: firstBook.authorId,
+    });
+    expect(created.status).toBe(HTTP_CONFLICT);
+  });
+
   it('borrows a book, lists the loan and returns it', async () => {
     const firstBook = await getFirstBook();
     const borrowed = await post('/loans', { bookId: firstBook.id, borrower: 'Ada' });
