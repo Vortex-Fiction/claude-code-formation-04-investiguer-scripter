@@ -1,0 +1,16 @@
+{
+  "name": "@formation/migration-legacy",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.18.0"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^4.1.12",
+    "vitest": "^4.1.12"
+  }
+}

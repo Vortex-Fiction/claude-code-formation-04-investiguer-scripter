@@ -15,7 +15,8 @@
     "test:coverage": "npm run test:coverage --workspaces --if-present",
     "lint": "eslint . && prettier --check . && npm run typecheck --workspace backend",
     "lint:doc": "vale --glob=\"{**/{README,CLAUDE,SKILL}.md,docs/incidents/*.md}\" .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "migrate:legacy": "node scripts/migrations/legacy/main.mjs"
   },
   "engines": {
     "node": ">=20.19"
